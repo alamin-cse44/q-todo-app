@@ -28,6 +28,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [taskName, setTaskName] = useState("");
+  const [taskStatus, setTaskStatus] = useState("incomplete");
   const [taskPriority, setTaskPriority] = useState("low");
   const [editIndex, setEditIndex] = useState(null);
   const [tabValue, setTabValue] = useState(0);
@@ -48,7 +49,7 @@ function App() {
         const updatedTasks = [...tasks];
         updatedTasks[editIndex] = {
           name: taskName,
-          status: "incomplete",
+          status: taskStatus,
           priority: taskPriority,
         };
         setTasks(updatedTasks);
@@ -56,7 +57,7 @@ function App() {
       } else {
         setTasks([
           ...tasks,
-          { name: taskName, status: "incomplete", priority: taskPriority },
+          { name: taskName, status: taskStatus, priority: taskPriority },
         ]);
       }
       setTaskName("");
@@ -80,6 +81,7 @@ function App() {
   // update task
   const handleEditTask = (index) => {
     setTaskName(tasks[index].name);
+    setTaskStatus(tasks[index].status);
     setTaskPriority(tasks[index].priority);
     setEditIndex(index);
   };
@@ -91,6 +93,9 @@ function App() {
   const completedTasksCount = tasks.filter(
     (task) => task.status === "completed"
   ).length;
+  const lowP = tasks.filter((task) => task.priority === "low");
+  const mediumP = tasks.filter((task) => task.priority === "medium");
+  const hightP = tasks.filter((task) => task.priority === "high");
   return (
     <Container>
       {/* form section */}
