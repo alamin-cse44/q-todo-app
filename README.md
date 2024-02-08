@@ -1,8 +1,11 @@
-# React + Vite
+# React ToDo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The feature I have Implemented listed below:
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- I have used react verson 18.2.0 and Material ui library.
+- Basically a form is implemented logically for adding or editing a specific task
+- user can add a task with name and priority and by default with status incomplete  
+- user can change the status by clicking on switch 
+- user can edit an existing task and delete too
+- localstorage is used for storing data
+- filtering is done for priority basis of the tasks and counter is added for all tasks and completed tasks
