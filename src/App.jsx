@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
   Button,
   Container,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -20,7 +22,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -59,6 +61,19 @@ function App() {
       setTaskName("");
       setTaskPriority("low");
     }
+  };
+  // change status
+  const handleStatusToggle = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].status =
+      updatedTasks[index].status === "completed" ? "incomplete" : "completed";
+    setTasks(updatedTasks);
+  };
+  // delete task
+  const handleDeleteTask = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks.splice(index, 1);
+    setTasks(updatedTasks);
   };
 
   const handleChangeTab = (event, newValue) => {
@@ -133,10 +148,15 @@ function App() {
                         <span>{task.status}</span>
                         <Switch
                           checked={task.status === "completed"}
-                          // onChange={() => handleStatusToggle(index)}
+                          onChange={() => handleStatusToggle(index)}
                         />
                       </TableCell>
                       <TableCell>{task.priority}</TableCell>
+                      <TableCell>
+                        <IconButton onClick={() => handleDeleteTask(index)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
