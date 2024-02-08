@@ -1,29 +1,19 @@
 import { useEffect, useState } from "react";
 import {
   AppBar,
-  Box,
   Button,
   Container,
   FormControl,
-  IconButton,
   InputLabel,
   MenuItem,
   Paper,
   Select,
-  Switch,
   Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Tabs,
   TextField,
   Typography,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import AllTask from "./components/AllTask";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -61,7 +51,7 @@ function App() {
         ]);
       }
       setTaskName("");
-      setTaskPriority("low");
+      setTaskPriority("");
     }
   };
   // change status
@@ -89,24 +79,28 @@ function App() {
   const handleChangeTab = (event, newValue) => {
     setTabValue(newValue);
   };
+
+  // filtering
   const allTasksCount = tasks.length;
   const completedTasksCount = tasks.filter(
     (task) => task.status === "completed"
   ).length;
   const lowP = tasks.filter((task) => task.priority === "low");
   const mediumP = tasks.filter((task) => task.priority === "medium");
-  const hightP = tasks.filter((task) => task.priority === "high");
+  const highP = tasks.filter((task) => task.priority === "high");
   return (
     <Container>
       {/* form section */}
-      <Paper style={{ padding: "20px", marginTop: "20px" }}>
-        <Typography variant="h6">Add/Edit Task</Typography>
+      <Paper sx={{ padding: "20px", marginTop: "20px", mx: { sm: 18 } }}>
+        <Typography variant="h6" mb={2}>
+          Add/Edit Task
+        </Typography>
         <TextField
           label="Task Name"
           value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
           fullWidth
-          style={{ marginBottom: "10px" }}
+          style={{ marginBottom: "20px" }}
         />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Priority</InputLabel>
@@ -129,73 +123,70 @@ function App() {
       </Paper>
 
       {/* Header */}
-      <AppBar position="static">
-        <Tabs value={tabValue} onChange={handleChangeTab}>
+      <AppBar
+        position="static"
+        sx={{ background: "transparent", mt: 2, boxShadow: "none" }}
+      >
+        <Tabs value={tabValue} onChange={handleChangeTab} variant="scrollable">
           <Tab label="All Tasks" />
           <Tab label="Low Priority Tasks" />
           <Tab label="Medium Priority Tasks" />
           <Tab label="High Priority Tasks" />
         </Tabs>
       </AppBar>
+      {/* content */}
       <Paper style={{ padding: "20px", marginTop: "20px" }}>
         {tabValue === 0 && (
-          <div>
-            <Typography variant="h6">All Tasks</Typography>
-            <Typography>Total Tasks: {allTasksCount}</Typography>
-            <Typography>Completed Tasks: {completedTasksCount}</Typography>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Priority</TableCell>
-                    <TableCell>Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {tasks.map((task, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{task.name}</TableCell>
-                      <TableCell>
-                        <span>{task.status}</span>
-                        <Switch
-                          checked={task.status === "completed"}
-                          onChange={() => handleStatusToggle(index)}
-                        />
-                      </TableCell>
-                      <TableCell>{task.priority}</TableCell>
-                      <TableCell>
-                        <IconButton onClick={() => handleEditTask(index)}>
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton onClick={() => handleDeleteTask(index)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
+          <AllTask
+            msg={"all"}
+            tasks={tasks}
+            allTasksCount={allTasksCount}
+            completedTasksCount={completedTasksCount}
+            handleDeleteTask={handleDeleteTask}
+            handleEditTask={handleEditTask}
+            handleStatusToggle={handleStatusToggle}
+          />
         )}
         {tabValue === 1 && (
           <div>
             <Typography variant="h6">Low Priority Tasks</Typography>
-            {/* Render low priority tasks */}
+            <AllTask
+              msg={""}
+              tasks={lowP}
+              allTasksCount={allTasksCount}
+              completedTasksCount={completedTasksCount}
+              handleDeleteTask={handleDeleteTask}
+              handleEditTask={handleEditTask}
+              handleStatusToggle={handleStatusToggle}
+            />
           </div>
         )}
         {tabValue === 2 && (
           <div>
             <Typography variant="h6">Medium Priority Tasks</Typography>
-            {/* Render medium priority tasks */}
+            <AllTask
+              msg={""}
+              tasks={mediumP}
+              allTasksCount={allTasksCount}
+              completedTasksCount={completedTasksCount}
+              handleDeleteTask={handleDeleteTask}
+              handleEditTask={handleEditTask}
+              handleStatusToggle={handleStatusToggle}
+            />
           </div>
         )}
         {tabValue === 3 && (
           <div>
             <Typography variant="h6">High Priority Tasks</Typography>
-            {/* Render high priority tasks */}
+            <AllTask
+              msg={""}
+              tasks={highP}
+              allTasksCount={allTasksCount}
+              completedTasksCount={completedTasksCount}
+              handleDeleteTask={handleDeleteTask}
+              handleEditTask={handleEditTask}
+              handleStatusToggle={handleStatusToggle}
+            />
           </div>
         )}
       </Paper>
