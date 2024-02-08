@@ -9,3 +9,4 @@ The feature I have Implemented listed below:
 - user can edit an existing task and delete too
 - localstorage is used for storing data
 - filtering is done for priority basis of the tasks and counter is added for all tasks and completed tasks
+- The app is user friendly
