@@ -22,6 +22,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function App() {
@@ -74,6 +75,13 @@ function App() {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
+  };
+
+  // update task
+  const handleEditTask = (index) => {
+    setTaskName(tasks[index].name);
+    setTaskPriority(tasks[index].priority);
+    setEditIndex(index);
   };
 
   const handleChangeTab = (event, newValue) => {
@@ -153,6 +161,9 @@ function App() {
                       </TableCell>
                       <TableCell>{task.priority}</TableCell>
                       <TableCell>
+                        <IconButton onClick={() => handleEditTask(index)}>
+                          <EditIcon />
+                        </IconButton>
                         <IconButton onClick={() => handleDeleteTask(index)}>
                           <DeleteIcon />
                         </IconButton>
